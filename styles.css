@@ -229,7 +229,34 @@ h1{
   border:1px solid rgba(255,255,255,.10);
   font-size:12px; font-weight:800;
   color: rgba(234,240,255,.9);
+}/* Project Thumbnails (Hybrid premium) */
+.thumb-wrap{
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.04);
+  margin-bottom: 14px;
+  box-shadow: 0 14px 44px rgba(0,0,0,.22);
 }
+
+.project-thumb{
+  display: block;
+  width: 100%;
+  height: auto;
+  transform: scale(1.06) translate3d(0,0,0);
+  transition: transform .18s ease;
+  will-change: transform;
+}
+
+.card.project:hover .thumb-wrap{
+  box-shadow: 0 18px 60px rgba(0,0,0,.45);
+}
+
+@media (prefers-reduced-motion: reduce){
+  .project-thumb{transition:none; transform:none}
+}
+
 .card h3{margin:10px 0 8px; font-size:16px}
 .card p{margin:0; color:var(--muted); line-height:1.55; font-size:13px}
 .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
