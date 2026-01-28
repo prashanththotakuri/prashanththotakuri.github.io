@@ -353,3 +353,40 @@ h1{
   .project-thumb{transition:none; transform:none}
   .thumb-wrap::after{transition:none}
 }
+/* Click pulse */
+.cursorfx-pulse{
+  position:absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  left: var(--x);
+  top: var(--y);
+  pointer-events:none;
+  mix-blend-mode: screen;
+
+  background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 70%);
+  box-shadow:
+    0 0 40px rgba(0,230,183,.65),
+    0 0 70px rgba(109,91,255,.55);
+  opacity: .9;
+
+  animation: pulseBurst .55s ease-out forwards;
+}
+
+@keyframes pulseBurst{
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: .95; }
+  100% { transform: translate(-50%, -50%) scale(18);  opacity: 0; }
+}
+
+/* Hover boost (default off) */
+.cursorfx.is-boost .cursorfx-glow{
+  opacity: .98;
+  filter: blur(105px);
+  transform: translate(-50%, -50%) scale(1.08);
+}
+.cursorfx.is-boost .cursorfx-core{
+  box-shadow:
+    0 0 22px rgba(0,230,183,1),
+    0 0 46px rgba(109,91,255,.7);
+}
