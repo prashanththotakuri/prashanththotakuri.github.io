@@ -352,7 +352,77 @@ h1{
   .reveal{transition:none}
   .project-thumb{transition:none; transform:none}
   .thumb-wrap::after{transition:none}
+}/* =========================
+   DESIGN MONSTER CURSOR FX
+   ========================= */
+
+/* keep normal cursor visible? if you want the monster effect ONLY, uncomment the next line */
+/* body{ cursor:none; } */
+
+.cursorfx{
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  --x: 50vw;
+  --y: 50vh;
 }
+
+.cursorfx-glow{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 520px;
+  height: 520px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  filter: blur(90px);
+  opacity: .85;
+  mix-blend-mode: screen;
+  background:
+    radial-gradient(circle at 30% 30%, rgba(0,230,183,.65), transparent 55%),
+    radial-gradient(circle at 70% 70%, rgba(109,91,255,.60), transparent 55%);
+  transition: opacity .2s ease, filter .2s ease, transform .2s ease;
+}
+
+.cursorfx-core{
+  position:absolute;
+  left: var(--x);
+  top: var(--y);
+  width: 10px;
+  height: 10px;
+  transform: translate(-50%, -50%);
+  border-radius: 999px;
+  background: rgba(255,255,255,.9);
+  mix-blend-mode: screen;
+  box-shadow:
+    0 0 14px rgba(0,230,183,.85),
+    0 0 26px rgba(109,91,255,.65);
+  opacity: .9;
+}
+
+.cursorfx-dot{
+  position:absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(255,255,255,.75), rgba(255,255,255,0) 70%);
+  box-shadow:
+    0 0 18px rgba(0,230,183,.45),
+    0 0 26px rgba(109,91,255,.35);
+  mix-blend-mode: screen;
+  pointer-events:none;
+}
+
+/* Don’t break mobile */
+@media (hover: none) and (pointer: coarse){
+  .cursorfx{ display:none; }
+}
+
+@media (prefers-reduced-motion: reduce){
+  .cursorfx{ display:none; }
+}
+
 /* Click pulse */
 .cursorfx-pulse{
   position:absolute;
