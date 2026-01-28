@@ -253,6 +253,24 @@ h1{
 
 .card h3{margin:10px 0 8px; font-size:16px}
 .card p{margin:0; color:var(--muted); line-height:1.55; font-size:13px}
+.project-points{
+  margin-top: 12px;
+  display: grid;
+  gap: 8px;
+}
+.pp{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  color: rgba(234,240,255,.82);
+  font-weight:700;
+  font-size:13px;
+  line-height:1.35;
+}
+.pp span{
+  flex:0 0 auto;
+  filter: drop-shadow(0 0 10px rgba(0,230,183,.25));
+}
 
 .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
 .tags span{
