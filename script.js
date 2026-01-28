@@ -329,3 +329,47 @@ h1{
   .blob, .ping{animation:none}
   .reveal{transition:none}
 }
+// Premium parallax for project thumbnails
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+if (!prefersReducedMotion) {
+  const parallaxItems = document.querySelectorAll("[data-parallax]");
+
+  parallaxItems.forEach((wrap) => {
+    const img = wrap.querySelector("img");
+    if (!img) return;
+
+    let rect;
+
+    const onEnter = () => {
+      rect = wrap.getBoundingClientRect();
+      wrap.classList.add("parallax-on");
+    };
+
+    const onLeave = () => {
+      img.style.transform = "translate3d(0,0,0) scale(1.03)";
+      wrap.classList.remove("parallax-on");
+    };
+
+    const onMove = (e) => {
+      if (!rect) rect = wrap.getBoundingClientRect();
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      // range: -1 to 1
+      const dx = (x / rect.width - 0.5) * 2;
+      const dy = (y / rect.height - 0.5) * 2;
+
+      // subtle movement (premium)
+      const moveX = dx * 10; // px
+      const moveY = dy * 8;  // px
+
+      img.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) scale(1.08)`;
+    };
+
+    wrap.addEventListener("mouseenter", onEnter);
+    wrap.addEventListener("mouseleave", onLeave);
+    wrap.addEventListener("mousemove", onMove);
+  });
+}
