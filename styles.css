@@ -116,30 +116,9 @@ a{color:inherit}
 .hero{
   padding:66px 0 18px;
   display:grid;
-  grid-template-columns: 1.2fr .8fr;
+  grid-template-columns: 1.15fr .85fr;
   gap:22px;
   align-items:start;
-}
-.pill{
-  display:inline-flex; align-items:center; gap:10px;
-  padding:10px 12px;
-  border-radius:999px;
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.06);
-  color: var(--muted);
-  font-weight:600;
-  width:fit-content;
-}
-.ping{
-  width:10px; height:10px; border-radius:999px;
-  background:#00E6B7;
-  box-shadow: 0 0 0 0 rgba(0,230,183,.45);
-  animation: ping 1.6s infinite;
-}
-@keyframes ping{
-  0%{box-shadow: 0 0 0 0 rgba(0,230,183,.45)}
-  70%{box-shadow: 0 0 0 10px rgba(0,230,183,0)}
-  100%{box-shadow: 0 0 0 0 rgba(0,230,183,0)}
 }
 h1{
   margin:14px 0 10px;
@@ -162,32 +141,27 @@ h1{
   max-width: 62ch;
 }
 .hero-actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:18px}
-.stats{
-  margin-top:18px;
-  display:flex; gap:12px; flex-wrap:wrap;
-}
-.stat{
-  flex: 1 1 140px;
-  padding:14px;
-  border-radius: var(--radius);
-  border:1px solid rgba(255,255,255,.10);
-  background: rgba(255,255,255,.06);
-}
-.stat-num{font-size:18px; font-weight:800}
-.stat-label{margin-top:4px; font-size:13px; color:var(--muted); font-weight:600}
 
+/* Profile card (premium) */
 .profile-card{
   border-radius: 22px;
   border:1px solid rgba(255,255,255,.10);
   background: linear-gradient(180deg, rgba(255,255,255,.10), rgba(255,255,255,.05));
   box-shadow: var(--shadow);
-  padding:16px;
+  padding:18px;
+  position: relative;
+  overflow: hidden;
 }
-.profile-top{display:flex; gap:12px; align-items:center}
-.avatar{
-  width:56px; height:56px; border-radius:16px; object-fit:cover;
-  border:1px solid rgba(255,255,255,.12);
+.profile-card::before{
+  content:"";
+  position:absolute; inset:-40%;
+  background:
+    radial-gradient(circle at 25% 25%, rgba(0,230,183,.14), transparent 55%),
+    radial-gradient(circle at 75% 70%, rgba(109,91,255,.16), transparent 55%);
+  opacity:.8;
+  pointer-events:none;
 }
+.profile-top{display:flex; gap:12px; align-items:center; position:relative; z-index:1}
 .avatar-fallback{
   width:56px; height:56px; border-radius:16px;
   display:grid; place-items:center;
@@ -195,13 +169,13 @@ h1{
   border:1px solid rgba(255,255,255,.12);
   font-weight:900;
 }
-.name{font-weight:800}
-.role{color:var(--muted); font-size:13px; margin-top:2px; font-weight:600}
-.mini{margin-top:14px; border-top:1px solid rgba(255,255,255,.08); padding-top:12px}
+.name{font-weight:900; letter-spacing:.2px}
+.role{color:var(--muted); font-size:13px; margin-top:2px; font-weight:700}
+.mini{margin-top:14px; border-top:1px solid rgba(255,255,255,.08); padding-top:12px; position:relative; z-index:1}
 .mini-row{display:flex; justify-content:space-between; gap:10px; padding:8px 0}
-.k{color:rgba(234,240,255,.6); font-weight:700; font-size:12px}
-.v{color:rgba(234,240,255,.86); font-weight:600; font-size:12px; text-align:right}
-.profile-actions{display:flex; gap:10px; margin-top:12px}
+.k{color:rgba(234,240,255,.6); font-weight:800; font-size:12px}
+.v{color:rgba(234,240,255,.86); font-weight:700; font-size:12px; text-align:right}
+.profile-actions{display:flex; gap:10px; margin-top:12px; position:relative; z-index:1}
 
 /* Sections */
 .section-head h2{margin:0; font-size:28px; letter-spacing:-.3px}
@@ -224,6 +198,7 @@ h1{
 }
 .card:hover{transform: translateY(-2px); background: rgba(255,255,255,.08)}
 
+.card-top{margin-top:8px}
 .badge{
   display:inline-flex; align-items:center;
   padding:6px 10px;
@@ -240,7 +215,7 @@ h1{
 .thumb-wrap{
   position: relative;
   width: 100%;
-  height: 210px;               /* adjust if you want taller */
+  height: 210px;
   border-radius: 16px;
   overflow: hidden;
   margin: 0 0 14px;
@@ -296,8 +271,6 @@ h1{
   color: #B9B2FF;
 }
 .link:hover{text-decoration:underline}
-.callout{background: linear-gradient(180deg, rgba(109,91,255,.16), rgba(0,230,183,.08))}
-.bullets{margin:12px 0 0; padding-left:18px; color:rgba(234,240,255,.80); font-weight:600; line-height:1.65; font-size:13px}
 
 .pill-grid{
   margin-top:18px;
