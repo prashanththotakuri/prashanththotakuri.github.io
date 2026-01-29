@@ -237,6 +237,37 @@ h1{
   opacity:.8;
   pointer-events:none;
 }
+/* ===== Profile photo (matches dark background) ===== */
+.avatar-img{
+  width:56px;
+  height:56px;
+  border-radius:999px;
+  object-fit:cover;
+
+  border:1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+
+  /* subtle premium ring + blend */
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.04),
+    0 0 0 7px rgba(0,230,183,.10),
+    0 0 0 10px rgba(109,91,255,.08),
+    0 14px 40px rgba(0,0,0,.35);
+
+  filter: contrast(1.02) saturate(1.02);
+  transition: transform .22s ease, filter .22s ease, box-shadow .22s ease;
+}
+
+.profile-card:hover .avatar-img{
+  transform: scale(1.06);            /* subtle hover zoom */
+  filter: contrast(1.05) saturate(1.06);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.05),
+    0 0 0 7px rgba(0,230,183,.14),
+    0 0 0 10px rgba(109,91,255,.12),
+    0 18px 55px rgba(0,0,0,.42);
+}
+
 .profile-top{display:flex; gap:12px; align-items:center; position:relative; z-index:1}
 
 /* Profile photo - matches dark site + subtle hover zoom */
