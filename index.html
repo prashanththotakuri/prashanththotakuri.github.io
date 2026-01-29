@@ -8,17 +8,29 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-  <!-- IMPORTANT -->
   <link rel="stylesheet" href="./styles.css" />
 </head>
 
 <body>
 
+  <!-- Cursor FX -->
+  <div class="cursorfx" aria-hidden="true">
+    <div class="cursorfx-glow"></div>
+    <div class="cursorfx-core"></div>
+  </div>
+
+  <!-- Background blobs -->
+  <div class="bg" aria-hidden="true">
+    <div class="blob b1"></div>
+    <div class="blob b2"></div>
+    <div class="noise"></div>
+  </div>
+
 <header class="header">
   <div class="container nav">
-    <a class="brand" href="#">
+    <a class="brand" href="#top">
       <span class="dot"></span>
       <span>Prashanth</span>
     </a>
@@ -26,16 +38,14 @@
     <nav class="links">
       <a href="#projects">Projects</a>
       <a href="#skills">Skills</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#testimonials">Testimonials</a>
       <a href="#contact">Contact</a>
     </nav>
   </div>
 </header>
-<div class="cursorfx" aria-hidden="true">
-  <div class="cursorfx-glow"></div>
-  <div class="cursorfx-core"></div>
-</div>
 
-<main class="container">
+<main id="top" class="container">
 
 <!-- ================= HERO ================= -->
 <section class="hero">
@@ -49,14 +59,49 @@
       I design scalable UI + API automation frameworks (Selenium, Playwright, RestAssured/Postman),
       strengthen CI/CD pipelines, and help teams ship with confidence.
     </p>
+
+    <div class="hero-actions">
+      <a class="btn" href="#projects">See Projects</a>
+      <a class="btn ghost" href="#contact">Hire / Contact</a>
+    </div>
   </div>
+
+  <aside class="profile-card reveal">
+    <div class="profile-top">
+      <div class="avatar-fallback">PT</div>
+      <div>
+        <div class="name">Prashanth Thotakuri</div>
+        <div class="role">Senior QA Automation Engineer</div>
+      </div>
+    </div>
+
+    <div class="mini">
+      <div class="mini-row">
+        <div class="k">Focus</div>
+        <div class="v">UI + API Automation</div>
+      </div>
+      <div class="mini-row">
+        <div class="k">Strength</div>
+        <div class="v">CI-ready frameworks</div>
+      </div>
+      <div class="mini-row">
+        <div class="k">Tooling</div>
+        <div class="v">Selenium · Playwright · Postman</div>
+      </div>
+    </div>
+
+    <div class="profile-actions">
+      <a class="btn small" href="mailto:prashanththotakuri30@gmail.com">Email</a>
+      <a class="btn ghost small" href="https://www.linkedin.com/in/prashanth-prashanth-57b691130" target="_blank" rel="noreferrer">LinkedIn</a>
+    </div>
+  </aside>
 </section>
 
 <!-- ================= PROJECTS ================= -->
-<section id="projects" class="section">   <div class="section-head reveal">     <h2>Real Projects</h2>     <p>Frameworks built the way teams build in real companies: clean structure, reusable utilities, CI-ready.</p>   </div>    <div class="grid">      <!-- Project 1 -->     <article class="card project reveal">       <div class="thumb-wrap" data-parallax>         <img class="project-thumb" src="assets/projects/selenium.webp" alt="Selenium Java Automation Framework" loading="lazy">       </div>        <div class="card-top">         <div class="badge">Selenium • Java</div>         <h3>Selenium Java Automation Framework</h3>         <p>           Enterprise POM + TestNG framework with config-driven runs, reusable utilities, reporting-friendly structure,           and CI-ready setup.         </p>       </div>        <div class="project-points">         <div class="pp"><span>✅</span> Page Object Model + reusable actions</div>         <div class="pp"><span>✅</span> TestNG suites + Maven execution</div>         <div class="pp"><span>✅</span> Designed for CI/CD gating</div>       </div>        <div class="tags">         <span>POM</span><span>TestNG</span><span>Maven</span><span>CI</span>       </div>        <div class="card-actions">         <a class="btn small" href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank" rel="noreferrer">Repo</a>         <a class="btn small ghost" href="https://github.com/prashanththotakuri/selenium-java-automation-framework#readme" target="_blank" rel="noreferrer">Docs</a>       </div>     </article>      <!-- Project 2 -->     <article class="card project reveal">       <div class="thumb-wrap" data-parallax>         <img class="project-thumb" src="assets/projects/api.webp" alt="API Automation Suite" loading="lazy">       </div>        <div class="card-top">         <div class="badge">API • Postman • RestAssured</div>         <h3>API Automation Suite</h3>         <p>           API test suite covering auth, request validation, assertions, negative cases, and clean patterns           for maintainability and reporting.         </p>       </div>        <div class="project-points">         <div class="pp"><span>✅</span> Auth + token handling patterns</div>         <div class="pp"><span>✅</span> Assertions + schema validation style</div>         <div class="pp"><span>✅</span> Built for regression runs</div>       </div>        <div class="tags">         <span>Postman</span><span>RestAssured</span><span>Java</span><span>Assertions</span>       </div>        <div class="card-actions">         <a class="btn small" href="https://github.com/prashanththotakuri/api-automation-postman-restassured" target="_blank" rel="noreferrer">Repo</a>         <a class="btn small ghost" href="https://github.com/prashanththotakuri/api-automation-postman-restassured#readme" target="_blank" rel="noreferrer">Docs</a>       </div>     </article>      <!-- Project 3 -->     <article class="card project reveal">       <div class="thumb-wrap" data-parallax>         <img class="project-thumb" src="assets/projects/playwright.webp" alt="Playwright UI Automation" loading="lazy">       </div>        <div class="card-top">         <div class="badge">Playwright • UI</div>         <h3>Playwright UI Automation</h3>         <p>           Modern UI automation with stable selectors, retries, clean folder structure,           and fast smoke/regression coverage.         </p>       </div>        <div class="project-points">         <div class="pp"><span>✅</span> Stable selectors + retry strategy</div>         <div class="pp"><span>✅</span> Smoke + regression separation</div>         <div class="pp"><span>✅</span> Designed for pipeline execution</div>       </div>        <div class="tags">         <span>Playwright</span><span>JavaScript</span><span>Smoke</span><span>Retries</span>       </div>        <div class="card-actions">         <a class="btn small" href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank" rel="noreferrer">Repo</a>         <a class="btn small ghost" href="https://github.com/prashanththotakuri/playwright-ui-automation#readme" target="_blank" rel="noreferrer">Docs</a>       </div>     </article>      <!-- Project 4 -->     <article class="card project reveal">       <div class="thumb-wrap" data-parallax>         <img class="project-thumb" src="assets/projects/qa-strategy.webp" alt="QA Strategy & Samples" loading="lazy">       </div>        <div class="card-top">         <div class="badge">QA Leadership</div>         <h3>QA Strategy & Samples</h3>         <p>           Recruiter-friendly QA leadership pack: strategy, risk-based testing, traceability,           release checklist, and sample test cases.         </p>       </div>        <div class="project-points">         <div class="pp"><span>✅</span> Risk-based test strategy</div>         <div class="pp"><span>✅</span> RTM + release readiness</div>         <div class="pp"><span>✅</span> Enterprise documentation style</div>       </div>        <div class="tags">         <span>Strategy</span><span>RTM</span><span>Release</span><span>UAT</span>       </div>        <div class="card-actions">         <a class="btn small" href="https://github.com/prashanththotakuri/qa-test-strategy-and-samples" target="_blank" rel="noreferrer">Repo</a>         <a class="btn small ghost" href="https://github.com/prashanththotakuri/qa-test-strategy-and-samples#readme" target="_blank" rel="noreferrer">Docs</a>       </div>     </article>    </div> </section>
+<section id="projects" class="section">
   <div class="section-head">
     <h2>Featured Projects</h2>
-    <p>Production-ready frameworks with CI, clean structure, and enterprise patterns.</p>
+    <p>Frameworks built the way teams build in real companies: clean structure, CI, maintainability.</p>
   </div>
 
   <div class="grid">
@@ -73,20 +118,17 @@
       <div class="card-top">
         <div class="badge">Selenium</div>
         <h3>Selenium Java Automation Framework</h3>
-        <p>
-          Enterprise-style POM + TestNG framework with config-driven runs,
-          reusable utilities, and CI-ready structure.
-        </p>
+        <p>Enterprise POM + TestNG, config-driven runs, reusable utilities, CI-ready structure.</p>
       </div>
 
       <div class="tags">
-        <span>POM</span><span>TestNG</span><span>Maven</span><span>GitHub Actions</span>
+        <span>POM</span><span>TestNG</span><span>Maven</span><span>CI/CD</span>
       </div>
 
       <div class="card-actions">
-        <a class="link"
-           href="https://github.com/prashanththotakuri/selenium-java-automation-framework"
-           target="_blank">View Repo →</a>
+        <a class="link" href="./projects/selenium.html">Case Study →</a>
+        <span class="sep">•</span>
+        <a class="link" href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank" rel="noreferrer">Repo →</a>
       </div>
     </article>
 
@@ -102,10 +144,7 @@
       <div class="card-top">
         <div class="badge">API</div>
         <h3>API Automation (Postman + RestAssured)</h3>
-        <p>
-          API validation suite with authentication handling,
-          assertions, and reusable request patterns.
-        </p>
+        <p>Auth, assertions, validations, reusable request patterns and clean reporting structure.</p>
       </div>
 
       <div class="tags">
@@ -113,9 +152,9 @@
       </div>
 
       <div class="card-actions">
-        <a class="link"
-           href="https://github.com/prashanththotakuri/api-automation-postman-restassured"
-           target="_blank">View Repo →</a>
+        <a class="link" href="./projects/api.html">Case Study →</a>
+        <span class="sep">•</span>
+        <a class="link" href="https://github.com/prashanththotakuri/api-automation-postman-restassured" target="_blank" rel="noreferrer">Repo →</a>
       </div>
     </article>
 
@@ -131,20 +170,17 @@
       <div class="card-top">
         <div class="badge">Playwright</div>
         <h3>Playwright UI Automation</h3>
-        <p>
-          Fast and stable UI automation using modern selectors,
-          retries, and clean regression structure.
-        </p>
+        <p>Fast, stable UI tests with retries, clean selectors, and smoke + regression structure.</p>
       </div>
 
       <div class="tags">
-        <span>Playwright</span><span>JavaScript</span><span>Smoke</span><span>Retries</span>
+        <span>Playwright</span><span>JavaScript</span><span>Retries</span><span>Smoke</span>
       </div>
 
       <div class="card-actions">
-        <a class="link"
-           href="https://github.com/prashanththotakuri/playwright-ui-automation"
-           target="_blank">View Repo →</a>
+        <a class="link" href="./projects/playwright.html">Case Study →</a>
+        <span class="sep">•</span>
+        <a class="link" href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank" rel="noreferrer">Repo →</a>
       </div>
     </article>
 
@@ -160,10 +196,7 @@
       <div class="card-top">
         <div class="badge">Docs</div>
         <h3>QA Test Strategy & Samples</h3>
-        <p>
-          Risk-based test planning, RTM, release readiness checklists,
-          and enterprise QA documentation.
-        </p>
+        <p>Risk-based planning, RTM, release readiness checklist, and enterprise QA samples.</p>
       </div>
 
       <div class="tags">
@@ -171,14 +204,15 @@
       </div>
 
       <div class="card-actions">
-        <a class="link"
-           href="https://github.com/prashanththotakuri/qa-test-strategy-and-samples"
-           target="_blank">View Repo →</a>
+        <a class="link" href="./projects/qa-strategy.html">Case Study →</a>
+        <span class="sep">•</span>
+        <a class="link" href="https://github.com/prashanththotakuri/qa-test-strategy-and-samples" target="_blank" rel="noreferrer">Repo →</a>
       </div>
     </article>
 
   </div>
 </section>
+
 <!-- ================= SKILLS ================= -->
 <section id="skills" class="section">
   <div class="section-head">
@@ -186,19 +220,75 @@
     <p>Core tools recruiters search for.</p>
   </div>
 
-  <div class="pill-grid">
+  <div class="pill-grid reveal">
     <span>Selenium</span><span>Playwright</span><span>Postman</span><span>RestAssured</span>
     <span>Java</span><span>JavaScript</span><span>TestNG</span><span>Cucumber</span>
     <span>API Testing</span><span>CI/CD</span><span>GitHub Actions</span><span>JIRA</span><span>SQL</span>
   </div>
 </section>
 
+<!-- ================= METRICS ================= -->
+<section id="metrics" class="section">
+  <div class="section-head">
+    <h2>Metrics</h2>
+    <p>What I optimize for: speed, stability, and release confidence.</p>
+  </div>
+
+  <div class="metrics reveal">
+    <div class="metric">
+      <div class="metric-num">4</div>
+      <div class="metric-label">Frameworks built</div>
+      <div class="metric-sub">UI + API + Docs</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">CI-ready</div>
+      <div class="metric-label">Execution</div>
+      <div class="metric-sub">GitHub Actions / Maven</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">Stable</div>
+      <div class="metric-label">Automation patterns</div>
+      <div class="metric-sub">Retries · Waits · Design</div>
+    </div>
+    <div class="metric">
+      <div class="metric-num">Clean</div>
+      <div class="metric-label">Structure</div>
+      <div class="metric-sub">POM · Utilities · Reports</div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= TESTIMONIALS ================= -->
+<section id="testimonials" class="section">
+  <div class="section-head">
+    <h2>Testimonials</h2>
+    <p>Short, realistic feedback that speaks like real teams.</p>
+  </div>
+
+  <div class="tgrid">
+    <article class="tcard reveal">
+      <p class="tquote">“Prashanth brought order to our automation. Clear structure, fewer flaky failures, faster releases.”</p>
+      <div class="tby">Engineering Lead · Enterprise Delivery</div>
+    </article>
+
+    <article class="tcard reveal">
+      <p class="tquote">“He asks the right questions early, so we don’t discover requirements gaps during UAT.”</p>
+      <div class="tby">Product Owner · Agile Program</div>
+    </article>
+
+    <article class="tcard reveal">
+      <p class="tquote">“Strong API validation approach. Clean reporting and consistent patterns that the whole team can follow.”</p>
+      <div class="tby">Backend Engineer · Services Team</div>
+    </article>
+  </div>
+</section>
+
 <!-- ================= CONTACT ================= -->
 <section id="contact" class="section">
-  <div class="contact-box">
+  <div class="contact-box reveal">
     <div>
       <h2>Contact</h2>
-      <p>Want to discuss a QA/SDET role? Email me and I’ll respond quickly.</p>
+      <p class="muted">Want to discuss a QA/SDET role? Email me and I’ll respond quickly.</p>
 
       <div class="contact-row">
         <a class="btn" href="mailto:prashanththotakuri30@gmail.com">Email Me</a>
@@ -211,16 +301,21 @@
       <div class="mini-card">
         <div class="mini-title">Fast links</div>
         <a href="#projects">Featured Projects</a>
-        <a href="https://prashanththotakuri.github.io" target="_blank" rel="noreferrer">Portfolio Website</a>
+        <a href="#skills">Skills</a>
+        <a href="#metrics">Metrics</a>
       </div>
     </div>
   </div>
 </section>
-<main id="top" class="container">
+
+<footer class="footer muted">
+  <div class="container">
+    © <span id="year"></span> Prashanth Thotakuri
+  </div>
+</footer>
 
 </main>
 
-<!-- IMPORTANT -->
 <script src="./script.js"></script>
 </body>
 </html>
