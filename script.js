@@ -1,113 +1,153 @@
-// Footer year
-const yearEl = document.getElementById("year");
-if (yearEl) yearEl.textContent = new Date().getFullYear();
-
-// Motion preference
-const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-// Reveal on scroll
-if (!prefersReduced) {
-  const els = document.querySelectorAll(".reveal");
-  const io = new IntersectionObserver(
-    (entries) => entries.forEach((e) => e.isIntersecting && e.target.classList.add("show")),
-    { threshold: 0.12 }
-  );
-  els.forEach((el) => io.observe(el));
-} else {
-  document.querySelectorAll(".reveal").forEach((el) => el.classList.add("show"));
+/* -------------------------
+   Card action separator
+------------------------- */
+.sep{
+  color: rgba(234,240,255,.35);
+  font-weight: 900;
+  margin: 0 6px;
 }
 
-// -------------------------
-// Cursor FX (premium, controlled)
-// -------------------------
-const cursor = document.querySelector(".cursorfx");
-const glow = document.querySelector(".cursorfx-glow");
-const core = document.querySelector(".cursorfx-core");
-
-if (cursor && glow && core && !prefersReduced) {
-  let x = window.innerWidth / 2;
-  let y = window.innerHeight / 2;
-  let tx = x, ty = y;
-
-  // smooth follow
-  const tick = () => {
-    tx += (x - tx) * 0.14;
-    ty += (y - ty) * 0.14;
-    cursor.style.transform = `translate3d(${tx}px, ${ty}px, 0)`;
-    requestAnimationFrame(tick);
-  };
-  requestAnimationFrame(tick);
-
-  window.addEventListener("mousemove", (e) => {
-    x = e.clientX;
-    y = e.clientY;
-  }, { passive: true });
-
-  // boost only on interactive elements
-  const boostOn = () => cursor.classList.add("is-boost");
-  const boostOff = () => cursor.classList.remove("is-boost");
-
-  document.querySelectorAll("a, button, .card").forEach((el) => {
-    el.addEventListener("mouseenter", boostOn);
-    el.addEventListener("mouseleave", boostOff);
-  });
-
-  // click pulse (small but “wow”)
-  window.addEventListener("click", (e) => {
-    const p = document.createElement("div");
-    p.className = "cursorfx-pulse";
-    p.style.setProperty("--x", `${e.clientX}px`);
-    p.style.setProperty("--y", `${e.clientY}px`);
-    document.body.appendChild(p);
-    setTimeout(() => p.remove(), 650);
-  }, { passive: true });
+/* -------------------------
+   Metrics section
+------------------------- */
+.metrics{
+  margin-top: 18px;
+  display:grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+.metric{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  padding: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.22);
+}
+.metric-num{
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: -.2px;
+}
+.metric-label{
+  margin-top: 6px;
+  font-weight: 800;
+  color: rgba(234,240,255,.88);
+}
+.metric-sub{
+  margin-top: 6px;
+  color: rgba(234,240,255,.62);
+  font-weight: 700;
+  font-size: 13px;
 }
 
-// -------------------------
-// Premium thumbnail parallax (mouse move) - CALM version
-// -------------------------
-if (!prefersReduced) {
-  const wraps = document.querySelectorAll("[data-parallax]");
+/* -------------------------
+   Testimonials
+------------------------- */
+.tgrid{
+  margin-top: 18px;
+  display:grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+.tcard{
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  padding: 16px;
+  box-shadow: 0 12px 40px rgba(0,0,0,.22);
+}
+.tquote{
+  margin: 0;
+  color: rgba(234,240,255,.86);
+  font-weight: 700;
+  line-height: 1.6;
+}
+.tby{
+  margin-top: 12px;
+  color: rgba(234,240,255,.55);
+  font-weight: 800;
+  font-size: 13px;
+}
 
-  wraps.forEach((wrap) => {
-    const img = wrap.querySelector("img");
-    if (!img) return;
+/* -------------------------
+   Cursor FX (premium but not annoying)
+------------------------- */
+.cursorfx{
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 9999;
+  pointer-events: none;
+  transform: translate3d(50vw, 50vh, 0);
+}
+.cursorfx-glow{
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  filter: blur(90px);
+  opacity: .78;
+  background:
+    radial-gradient(circle, rgba(0,230,183,.30), transparent 55%),
+    radial-gradient(circle, rgba(109,91,255,.24), transparent 60%);
+  transition: opacity .18s ease, filter .18s ease, transform .18s ease;
+}
+.cursorfx-core{
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  background: rgba(255,255,255,.95);
+  box-shadow:
+    0 0 16px rgba(0,230,183,.85),
+    0 0 28px rgba(109,91,255,.55);
+  opacity: .92;
+}
 
-    let rect = null;
-    let raf = null;
+/* subtle boost on hover */
+.cursorfx.is-boost .cursorfx-glow{
+  opacity: .95;
+  filter: blur(105px);
+  transform: translate(-50%, -50%) scale(1.04);
+}
+.cursorfx.is-boost .cursorfx-core{
+  box-shadow:
+    0 0 18px rgba(0,230,183,1),
+    0 0 36px rgba(109,91,255,.70);
+}
 
-    const strengthX = 6; // lowered (calm)
-    const strengthY = 5;
+/* click pulse */
+.cursorfx-pulse{
+  position:absolute;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  transform: translate(-50%, -50%);
+  left: var(--x);
+  top: var(--y);
+  pointer-events:none;
+  mix-blend-mode: screen;
+  background: radial-gradient(circle, rgba(255,255,255,.95), rgba(255,255,255,0) 70%);
+  box-shadow:
+    0 0 40px rgba(0,230,183,.65),
+    0 0 70px rgba(109,91,255,.55);
+  opacity: .9;
+  animation: pulseBurst .55s ease-out forwards;
+}
+@keyframes pulseBurst{
+  0%   { transform: translate(-50%, -50%) scale(1);   opacity: .95; }
+  100% { transform: translate(-50%, -50%) scale(18);  opacity: 0; }
+}
 
-    const onEnter = () => {
-      rect = wrap.getBoundingClientRect();
-      img.style.willChange = "transform";
-    };
+/* Responsive: metrics/testimonials grids */
+@media (max-width: 980px){
+  .metrics{ grid-template-columns: 1fr; }
+  .tgrid{ grid-template-columns: 1fr; }
+}
 
-    const onMove = (e) => {
-      if (!rect) rect = wrap.getBoundingClientRect();
-
-      const dx = ((e.clientX - rect.left) / rect.width - 0.5) * 2; // -1..1
-      const dy = ((e.clientY - rect.top) / rect.height - 0.5) * 2;
-
-      const moveX = dx * strengthX;
-      const moveY = dy * strengthY;
-
-      if (raf) cancelAnimationFrame(raf);
-      raf = requestAnimationFrame(() => {
-        img.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) scale(1.06)`;
-      });
-    };
-
-    const onLeave = () => {
-      if (raf) cancelAnimationFrame(raf);
-      img.style.transform = "translate3d(0,0,0) scale(1.03)";
-      img.style.willChange = "auto";
-      rect = null;
-    };
-
-    wrap.addEventListener("mouseenter", onEnter);
-    wrap.addEventListener("mousemove", onMove);
-    wrap.addEventListener("mouseleave", onLeave);
-  });
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce){
+  .cursorfx{ display:none; }
 }
