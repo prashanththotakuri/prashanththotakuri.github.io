@@ -5,7 +5,7 @@ document.documentElement.classList.add("js");
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Mobile menu (safe even if elements don't exist)
+// Mobile menu
 const btn = document.getElementById("menuBtn");
 const mobileNav = document.getElementById("mobileNav");
 if (btn && mobileNav) {
@@ -72,7 +72,7 @@ if (!prefersReduced) {
     };
 
     const onLeave = () => {
-      img.style.transform = "translate3d(0,0,0) scale(1.02)";
+      img.style.transform = "translate3d(0,0,0) scale(1.03)";
       img.style.willChange = "auto";
       rect = null;
     };
@@ -84,20 +84,22 @@ if (!prefersReduced) {
 }
 
 /* =========================
-   Cursor FX (next level)
-   ========================= */
+   Cursor FX (fixed)
+   =========================
+   Your CSS reads --x/--y from :root,
+   so we must set vars on documentElement (not .cursorfx).
+*/
 if (!prefersReduced) {
   const fx = document.querySelector(".cursorfx");
   if (fx) {
-    // Smooth follow
     let targetX = window.innerWidth / 2;
     let targetY = window.innerHeight / 2;
     let currentX = targetX;
     let currentY = targetY;
 
     const setVars = (x, y) => {
-      fx.style.setProperty("--x", `${x}px`);
-      fx.style.setProperty("--y", `${y}px`);
+      document.documentElement.style.setProperty("--x", `${x}px`);
+      document.documentElement.style.setProperty("--y", `${y}px`);
     };
 
     window.addEventListener(
@@ -140,7 +142,6 @@ if (!prefersReduced) {
       ".mini-card",
       ".link",
       ".avatar-wrap",
-      ".avatar-img",
     ].join(",");
 
     document.addEventListener(
@@ -166,47 +167,45 @@ if (!prefersReduced) {
 }
 
 /* =========================
-   Avatar 3D tilt (subtle)
-   - Works with .avatar-wrap + .avatar-img CSS vars (--rx/--ry)
+   Avatar 3D tilt + shine helper
    ========================= */
 if (!prefersReduced) {
-  const avatar = document.querySelector("[data-avatar]");
-  if (avatar) {
-    let rect = null;
+  const wrap = document.getElementById("avatarWrap");
+  if (wrap) {
+    // add shine overlay element <i>
+    const i = document.createElement("i");
+    wrap.appendChild(i);
 
-    const maxTilt = 10; // degrees (subtle)
-    const setTilt = (rx, ry) => {
-      avatar.style.setProperty("--rx", `${rx}deg`);
-      avatar.style.setProperty("--ry", `${ry}deg`);
-    };
+    let rect = null;
+    const maxTilt = 10;
 
     const onEnter = () => {
-      rect = avatar.getBoundingClientRect();
+      rect = wrap.getBoundingClientRect();
+      wrap.style.willChange = "transform";
     };
 
     const onMove = (e) => {
-      if (!rect) rect = avatar.getBoundingClientRect();
-
+      if (!rect) rect = wrap.getBoundingClientRect();
       const x = e.clientX - rect.left;
       const y = e.clientY - rect.top;
 
-      const dx = (x / rect.width - 0.5) * 2; // -1..1
-      const dy = (y / rect.height - 0.5) * 2;
+      const px = (x / rect.width - 0.5) * 2;
+      const py = (y / rect.height - 0.5) * 2;
 
-      // Invert Y for “natural” tilt
-      const ry = dx * maxTilt;
-      const rx = -dy * maxTilt;
+      const ry = px * maxTilt;
+      const rx = -py * maxTilt;
 
-      setTilt(rx.toFixed(2), ry.toFixed(2));
+      wrap.style.transform = `translateZ(0) rotateX(${rx}deg) rotateY(${ry}deg) scale(1.04)`;
     };
 
     const onLeave = () => {
+      wrap.style.transform = "translateZ(0) rotateX(0deg) rotateY(0deg)";
+      wrap.style.willChange = "auto";
       rect = null;
-      setTilt(0, 0);
     };
 
-    avatar.addEventListener("mouseenter", onEnter);
-    avatar.addEventListener("mousemove", onMove);
-    avatar.addEventListener("mouseleave", onLeave);
+    wrap.addEventListener("mouseenter", onEnter);
+    wrap.addEventListener("mousemove", onMove);
+    wrap.addEventListener("mouseleave", onLeave);
   }
 }
