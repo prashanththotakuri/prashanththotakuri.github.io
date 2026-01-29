@@ -237,55 +237,137 @@ h1{
   opacity:.8;
   pointer-events:none;
 }
-/* ===== Profile photo (matches dark background) ===== */
-.avatar-img{
-  width:56px;
-  height:56px;
-  border-radius:999px;
-  object-fit:cover;
 
-  border:1px solid rgba(255,255,255,.14);
-  background: rgba(255,255,255,.06);
+/* ===== Next-level Avatar (ring + shine + float + tilt-ready) ===== */
+/* Use HTML:
+   <div class="avatar-wrap" data-avatar>
+     <img class="avatar-img" src="assets/profile.webp" .../>
+   </div>
+*/
+.avatar-wrap{
+  position: relative;
+  width: 88px;
+  height: 88px;
+  border-radius: 999px;
+  flex-shrink: 0;
 
-  /* subtle premium ring + blend */
-  box-shadow:
-    0 0 0 4px rgba(255,255,255,.04),
-    0 0 0 7px rgba(0,230,183,.10),
-    0 0 0 10px rgba(109,91,255,.08),
-    0 14px 40px rgba(0,0,0,.35);
+  /* tilt vars set by JS */
+  --rx: 0deg;
+  --ry: 0deg;
 
-  filter: contrast(1.02) saturate(1.02);
-  transition: transform .22s ease, filter .22s ease, box-shadow .22s ease;
+  background: rgba(255,255,255,.04);
+  transform-style: preserve-3d;
+  will-change: transform;
 }
 
+/* animated gradient ring */
+.avatar-wrap::after{
+  content:"";
+  position:absolute;
+  inset:-3px;
+  border-radius:999px;
+  background: linear-gradient(90deg, #00E6B7, #6D5BFF, #00E6B7);
+  background-size: 220% 220%;
+  animation: ringMove 3.2s linear infinite;
+  z-index: 0;
+  filter: saturate(1.08);
+  opacity: .95;
+}
+
+/* inner cutout */
+.avatar-wrap::before{
+  content:"";
+  position:absolute;
+  inset: 2px;
+  border-radius:999px;
+  background: rgba(7,10,18,.72);
+  border: 1px solid rgba(255,255,255,.10);
+  z-index: 1;
+}
+
+.avatar-img{
+  position: relative;
+  z-index: 2;
+
+  width:100%;
+  height:100%;
+  border-radius:999px;
+  object-fit:cover;
+  display:block;
+
+  border: 1px solid rgba(255,255,255,.12);
+  box-shadow:
+    0 0 0 4px rgba(255,255,255,.03),
+    0 14px 44px rgba(0,0,0,.58),
+    0 0 38px rgba(109,91,255,.22);
+
+  filter: contrast(1.03) saturate(1.03);
+  transform:
+    translateZ(14px)
+    rotateX(var(--rx))
+    rotateY(var(--ry))
+    scale(1);
+
+  transition:
+    transform .18s ease,
+    box-shadow .35s ease,
+    filter .25s ease;
+}
+
+/* shine sweep */
+.avatar-img::before{
+  content:"";
+  position:absolute;
+  inset:-40%;
+  background: linear-gradient(
+    120deg,
+    transparent 35%,
+    rgba(255,255,255,.32) 50%,
+    transparent 65%
+  );
+  transform: translateX(-65%) rotate(10deg);
+  opacity: 0;
+  pointer-events:none;
+}
+
+/* hover: pop + shine */
 .profile-card:hover .avatar-img{
-  transform: scale(1.06);            /* subtle hover zoom */
-  filter: contrast(1.05) saturate(1.06);
+  transform:
+    translateZ(16px)
+    rotateX(var(--rx))
+    rotateY(var(--ry))
+    scale(1.05);
+  filter: contrast(1.05) saturate(1.08);
   box-shadow:
     0 0 0 4px rgba(255,255,255,.05),
-    0 0 0 7px rgba(0,230,183,.14),
-    0 0 0 10px rgba(109,91,255,.12),
-    0 18px 55px rgba(0,0,0,.42);
+    0 18px 56px rgba(0,0,0,.72),
+    0 0 56px rgba(0,230,183,.32);
+}
+.profile-card:hover .avatar-img::before{
+  opacity: .85;
+  animation: shineSweep .95s ease-out forwards;
+}
+
+/* floating animation */
+@media (prefers-reduced-motion: no-preference){
+  .avatar-wrap{ animation: avatarFloat 5.6s ease-in-out infinite; }
+}
+
+@keyframes ringMove{
+  0%{ background-position: 0% 50%; }
+  50%{ background-position: 100% 50%; }
+  100%{ background-position: 0% 50%; }
+}
+@keyframes avatarFloat{
+  0%,100%{ transform: translateY(0px); }
+  50%{ transform: translateY(-6px); }
+}
+@keyframes shineSweep{
+  0%{ transform: translateX(-65%) rotate(10deg); }
+  100%{ transform: translateX(65%) rotate(10deg); }
 }
 
 .profile-top{display:flex; gap:12px; align-items:center; position:relative; z-index:1}
-
-/* Profile photo - matches dark site + subtle hover zoom */
-.avatar-img{
-  width:72px; height:72px;
-  border-radius:50%;
-  object-fit:cover;
-  border: 2px solid rgba(255,255,255,.12);
-  box-shadow: 0 16px 44px rgba(0,0,0,.35);
-  filter: grayscale(85%) contrast(1.08) brightness(.95);
-  transform: scale(1);
-  transition: transform .22s ease, filter .22s ease, border-color .22s ease;
-}
-.profile-card:hover .avatar-img{
-  transform: scale(1.05);
-  filter: grayscale(70%) contrast(1.1) brightness(1);
-  border-color: rgba(0,230,183,.22);
-}
 
 .name{font-weight:900; letter-spacing:.2px}
 .role{color:var(--muted); font-size:13px; margin-top:2px; font-weight:700}
@@ -469,9 +551,7 @@ h1{
 
 .footer{padding:46px 0 34px}
 
-/* Reveal animations (SAFE fallback)
-   Default: visible so content never disappears
-   JS adds .js class and then reveal anim applies */
+/* Reveal animations (SAFE fallback) */
 .reveal{
   opacity: 1;
   transform: none;
@@ -506,4 +586,9 @@ h1{
   .thumb-wrap::after{transition:none}
   .cursorfx{display:none}
   .js .reveal{transition:none; transform:none}
+
+  .avatar-wrap{animation:none}
+  .avatar-wrap::after{animation:none}
+  .avatar-img{transition:none; transform:none}
+  .avatar-img::before{animation:none}
 }
