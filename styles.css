@@ -8,6 +8,10 @@
   --shadow: 0 18px 60px rgba(0,0,0,.45);
   --radius: 18px;
   --max: 1120px;
+
+  /* Cursor vars updated by JS */
+  --x: 50vw;
+  --y: 50vh;
 }
 
 *{box-sizing:border-box}
@@ -25,18 +29,17 @@ a{color:inherit}
 .section{padding:72px 0}
 .muted{color:var(--muted)}
 .sep{opacity:.55; margin:0 8px}
+.subhead{margin:22px 0 10px; font-size:16px; letter-spacing:-.2px}
 
 /* Make anchor links land nicely below sticky header */
 #projects, #skills, #metrics, #testimonials, #contact { scroll-margin-top: 92px; }
 
-/* ===== Cursor FX (next level) ===== */
+/* ===== Cursor FX ===== */
 .cursorfx{
   position:fixed;
   inset:0;
   pointer-events:none;
   z-index:9999;
-  --x: 50vw;
-  --y: 50vh;
 }
 .cursorfx-glow{
   position:absolute;
@@ -138,6 +141,31 @@ a{color:inherit}
 }
 .links a:hover{color:var(--text); background:rgba(255,255,255,.06)}
 
+/* Mobile menu */
+.menu{
+  display:none;
+  align-items:center; justify-content:center;
+  width:44px; height:44px;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.10);
+  background: rgba(255,255,255,.06);
+  color: var(--text);
+  font-size:18px;
+  cursor:pointer;
+}
+.mobile{
+  display:none;
+  padding:10px 0 18px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.mobile a{
+  display:block; padding:12px 6px;
+  text-decoration:none; color:var(--muted);
+  font-weight:700;
+}
+.mobile a:hover{color:var(--text)}
+.mobile.open{display:block}
+
 /* ===== Buttons ===== */
 .btn{
   display:inline-flex; align-items:center; justify-content:center;
@@ -210,13 +238,24 @@ h1{
   pointer-events:none;
 }
 .profile-top{display:flex; gap:12px; align-items:center; position:relative; z-index:1}
-.avatar-fallback{
-  width:56px; height:56px; border-radius:16px;
-  display:grid; place-items:center;
-  background: rgba(255,255,255,.08);
-  border:1px solid rgba(255,255,255,.12);
-  font-weight:900;
+
+/* Profile photo - matches dark site + subtle hover zoom */
+.avatar-img{
+  width:72px; height:72px;
+  border-radius:50%;
+  object-fit:cover;
+  border: 2px solid rgba(255,255,255,.12);
+  box-shadow: 0 16px 44px rgba(0,0,0,.35);
+  filter: grayscale(85%) contrast(1.08) brightness(.95);
+  transform: scale(1);
+  transition: transform .22s ease, filter .22s ease, border-color .22s ease;
 }
+.profile-card:hover .avatar-img{
+  transform: scale(1.05);
+  filter: grayscale(70%) contrast(1.1) brightness(1);
+  border-color: rgba(0,230,183,.22);
+}
+
 .name{font-weight:900; letter-spacing:.2px}
 .role{color:var(--muted); font-size:13px; margin-top:2px; font-weight:700}
 .mini{margin-top:14px; border-top:1px solid rgba(255,255,255,.08); padding-top:12px; position:relative; z-index:1}
@@ -296,6 +335,7 @@ h1{
 .card h3{margin:10px 0 8px; font-size:16px}
 .card p{margin:0; color:var(--muted); line-height:1.55; font-size:13px}
 
+/* Tags + links */
 .tags{display:flex; flex-wrap:wrap; gap:8px; margin-top:12px}
 .tags span{
   padding:6px 10px;
@@ -306,7 +346,6 @@ h1{
   background: rgba(255,255,255,.05);
   font-weight:800;
 }
-
 .card-actions{margin-top:14px}
 .link{
   text-decoration:none;
@@ -328,6 +367,11 @@ h1{
   color: rgba(234,240,255,.84);
   font-weight:900;
   font-size:13px;
+}
+.pill-grid--dense span{
+  padding:8px 10px;
+  font-size:12px;
+  font-weight:800;
 }
 
 /* Metrics */
@@ -394,15 +438,13 @@ h1{
 
 .footer{padding:46px 0 34px}
 
-/* Reveal animations */
-/* Reveal Animations (safe fallback) */
-/* Default: visible (so nothing disappears if JS fails) */
+/* Reveal animations (SAFE fallback)
+   Default: visible so content never disappears
+   JS adds .js class and then reveal anim applies */
 .reveal{
   opacity: 1;
   transform: none;
 }
-
-/* Only hide when JS is running */
 .js .reveal{
   opacity: 0;
   transform: translateY(14px);
@@ -413,10 +455,10 @@ h1{
   transform: translateY(0);
 }
 
-.reveal.show{opacity:1; transform: translateY(0)}
-
 /* Responsive */
 @media (max-width: 980px){
+  .links{display:none}
+  .menu{display:inline-flex}
   .grid{grid-template-columns: 1fr}
   .hero{grid-template-columns: 1fr}
   .metrics{grid-template-columns: 1fr 1fr}
@@ -429,8 +471,8 @@ h1{
 @media (prefers-reduced-motion: reduce){
   html{scroll-behavior:auto}
   .blob{animation:none}
-  .reveal{transition:none}
   .project-thumb{transition:none; transform:none}
   .thumb-wrap::after{transition:none}
   .cursorfx{display:none}
+  .js .reveal{transition:none; transform:none}
 }
