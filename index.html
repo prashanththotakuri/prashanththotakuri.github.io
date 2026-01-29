@@ -78,10 +78,12 @@
         </div>
       </div>
 
-      <aside class="profile-card reveal">
+      <aside class="profile-card reveal" id="profileCard">
         <div class="profile-top">
-          <!-- Profile photo (upload as: assets/profile.webp) -->
-          <img src="assets/profile.webp" alt="Prashanth Thotakuri" class="avatar-img" loading="lazy" />
+          <!-- ✅ Avatar wrapper (keeps photo from covering name + adds ring/shine/tilt) -->
+          <div class="avatar-wrap" id="avatarWrap" aria-hidden="true">
+            <img src="assets/profile.webp" alt="Prashanth Thotakuri" class="avatar-img" loading="lazy" />
+          </div>
 
           <div>
             <div class="name">Prashanth Thotakuri</div>
