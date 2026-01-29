@@ -35,13 +35,25 @@
         <span>Prashanth</span>
       </a>
 
-      <nav class="links">
+      <nav class="links" aria-label="Primary">
         <a href="#projects">Projects</a>
         <a href="#skills">Skills</a>
         <a href="#metrics">Metrics</a>
         <a href="#testimonials">Testimonials</a>
         <a href="#contact">Contact</a>
       </nav>
+
+      <!-- Mobile menu button -->
+      <button class="menu" id="menuBtn" aria-label="Open menu" aria-expanded="false">☰</button>
+    </div>
+
+    <!-- Mobile nav -->
+    <div class="container mobile" id="mobileNav" aria-label="Mobile">
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#metrics">Metrics</a>
+      <a href="#testimonials">Testimonials</a>
+      <a href="#contact">Contact</a>
     </div>
   </header>
 
@@ -68,7 +80,9 @@
 
       <aside class="profile-card reveal">
         <div class="profile-top">
-          <div class="avatar-fallback">PT</div>
+          <!-- Profile photo (upload as: assets/profile.webp) -->
+          <img src="assets/profile.webp" alt="Prashanth Thotakuri" class="avatar-img" loading="lazy" />
+
           <div>
             <div class="name">Prashanth Thotakuri</div>
             <div class="role">Senior QA Automation Engineer</div>
@@ -110,9 +124,9 @@
         <article class="card project reveal">
           <div class="thumb-wrap" data-parallax>
             <img class="project-thumb"
-                 src="assets/projects/selenium.webp"
-                 alt="Selenium Java Automation Framework"
-                 loading="lazy">
+              src="assets/projects/selenium.webp"
+              alt="Selenium Java Automation Framework"
+              loading="lazy">
           </div>
 
           <div class="card-top">
@@ -136,9 +150,9 @@
         <article class="card project reveal">
           <div class="thumb-wrap" data-parallax>
             <img class="project-thumb"
-                 src="assets/projects/api.webp"
-                 alt="API Automation Suite"
-                 loading="lazy">
+              src="assets/projects/api.webp"
+              alt="API Automation Suite"
+              loading="lazy">
           </div>
 
           <div class="card-top">
@@ -162,9 +176,9 @@
         <article class="card project reveal">
           <div class="thumb-wrap" data-parallax>
             <img class="project-thumb"
-                 src="assets/projects/playwright.webp"
-                 alt="Playwright UI Automation"
-                 loading="lazy">
+              src="assets/projects/playwright.webp"
+              alt="Playwright UI Automation"
+              loading="lazy">
           </div>
 
           <div class="card-top">
@@ -188,9 +202,9 @@
         <article class="card project reveal">
           <div class="thumb-wrap" data-parallax>
             <img class="project-thumb"
-                 src="assets/projects/qa-strategy.webp"
-                 alt="QA Strategy & Test Architecture"
-                 loading="lazy">
+              src="assets/projects/qa-strategy.webp"
+              alt="QA Strategy & Test Architecture"
+              loading="lazy">
           </div>
 
           <div class="card-top">
@@ -217,13 +231,33 @@
     <section id="skills" class="section">
       <div class="section-head">
         <h2>Skills</h2>
-        <p>Core tools recruiters search for.</p>
+        <p>ATS-friendly keywords + real-world QA stack (50+).</p>
       </div>
 
+      <h3 class="subhead reveal">Core Skills (quick scan)</h3>
       <div class="pill-grid reveal">
         <span>Selenium</span><span>Playwright</span><span>Postman</span><span>RestAssured</span>
         <span>Java</span><span>JavaScript</span><span>TestNG</span><span>Cucumber</span>
-        <span>API Testing</span><span>CI/CD</span><span>GitHub Actions</span><span>JIRA</span><span>SQL</span>
+        <span>API Testing</span><span>UI Testing</span><span>CI/CD</span><span>GitHub Actions</span><span>JIRA</span><span>SQL</span>
+      </div>
+
+      <h3 class="subhead reveal" style="margin-top:18px;">Full QA / Testing Skill Set (50+)</h3>
+      <div class="pill-grid pill-grid--dense reveal">
+        <span>Test Strategy</span><span>Test Planning</span><span>Test Case Design</span><span>Test Execution</span><span>Risk-Based Testing</span>
+        <span>Requirements Analysis</span><span>RTM</span><span>Test Estimation</span><span>Test Data Management</span><span>Defect Lifecycle</span>
+        <span>Bug Triage</span><span>Root Cause Analysis</span><span>Release Sign-off</span><span>UAT Support</span><span>Agile/Scrum</span>
+        <span>Sprint Ceremonies</span><span>Smoke Testing</span><span>Sanity Testing</span><span>Regression Testing</span><span>Functional Testing</span>
+        <span>Integration Testing</span><span>System Testing</span><span>End-to-End Testing</span><span>Cross-Browser Testing</span><span>Mobile Testing</span>
+        <span>Accessibility Testing</span><span>Performance Testing</span><span>Load Testing</span><span>Stress Testing</span><span>Security Testing</span>
+        <span>OWASP Basics</span><span>API Automation</span><span>UI Automation</span><span>Framework Design</span><span>POM</span>
+        <span>BDD</span><span>TDD Awareness</span><span>TestNG</span><span>JUnit</span><span>Cucumber</span>
+        <span>Playwright</span><span>Selenium WebDriver</span><span>Cypress</span><span>Appium</span><span>Postman Collections</span>
+        <span>RestAssured</span><span>Swagger/OpenAPI</span><span>JSON</span><span>XML</span><span>OAuth2</span>
+        <span>JWT</span><span>Headers/Cookies</span><span>Mocking (WireMock)</span><span>Service Virtualization</span><span>SQL Validation</span>
+        <span>Git</span><span>GitHub</span><span>GitHub Actions</span><span>Jenkins</span><span>CI Pipelines</span>
+        <span>CD Pipelines</span><span>Maven</span><span>NPM</span><span>Docker Basics</span><span>Linux/CLI</span>
+        <span>Logs/Monitoring</span><span>Test Reporting</span><span>Allure (optional)</span><span>JIRA</span><span>Confluence</span>
+        <span>AWS Basics</span>
       </div>
     </section>
 
@@ -262,7 +296,7 @@
     <section id="testimonials" class="section">
       <div class="section-head">
         <h2>Testimonials</h2>
-        <p>Short, realistic feedback that speaks like real teams.</p>
+        <p>Short, realistic feedback that sounds like real teams.</p>
       </div>
 
       <div class="tgrid">
@@ -303,6 +337,7 @@
             <a href="#projects">Featured Projects</a>
             <a href="#skills">Skills</a>
             <a href="#metrics">Metrics</a>
+            <a href="#testimonials">Testimonials</a>
           </div>
         </div>
       </div>
