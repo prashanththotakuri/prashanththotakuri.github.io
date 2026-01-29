@@ -110,7 +110,6 @@ if (!prefersReduced) {
     );
 
     const tick = () => {
-      // easing
       currentX += (targetX - currentX) * 0.18;
       currentY += (targetY - currentY) * 0.18;
       setVars(currentX, currentY);
@@ -125,7 +124,6 @@ if (!prefersReduced) {
         const p = document.createElement("div");
         p.className = "cursorfx-pulse";
         document.body.appendChild(p);
-        // Remove after animation
         setTimeout(() => p.remove(), 650);
       },
       { passive: true }
@@ -141,6 +139,8 @@ if (!prefersReduced) {
       ".project-thumb",
       ".mini-card",
       ".link",
+      ".avatar-wrap",
+      ".avatar-img",
     ].join(",");
 
     document.addEventListener(
@@ -155,7 +155,6 @@ if (!prefersReduced) {
     document.addEventListener(
       "mouseout",
       (e) => {
-        // If leaving interactive area, remove boost
         const related = e.relatedTarget;
         if (!related || !related.closest?.(boostSelectors)) {
           fx.classList.remove("is-boost");
@@ -163,5 +162,51 @@ if (!prefersReduced) {
       },
       { passive: true }
     );
+  }
+}
+
+/* =========================
+   Avatar 3D tilt (subtle)
+   - Works with .avatar-wrap + .avatar-img CSS vars (--rx/--ry)
+   ========================= */
+if (!prefersReduced) {
+  const avatar = document.querySelector("[data-avatar]");
+  if (avatar) {
+    let rect = null;
+
+    const maxTilt = 10; // degrees (subtle)
+    const setTilt = (rx, ry) => {
+      avatar.style.setProperty("--rx", `${rx}deg`);
+      avatar.style.setProperty("--ry", `${ry}deg`);
+    };
+
+    const onEnter = () => {
+      rect = avatar.getBoundingClientRect();
+    };
+
+    const onMove = (e) => {
+      if (!rect) rect = avatar.getBoundingClientRect();
+
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const dx = (x / rect.width - 0.5) * 2; // -1..1
+      const dy = (y / rect.height - 0.5) * 2;
+
+      // Invert Y for “natural” tilt
+      const ry = dx * maxTilt;
+      const rx = -dy * maxTilt;
+
+      setTilt(rx.toFixed(2), ry.toFixed(2));
+    };
+
+    const onLeave = () => {
+      rect = null;
+      setTilt(0, 0);
+    };
+
+    avatar.addEventListener("mouseenter", onEnter);
+    avatar.addEventListener("mousemove", onMove);
+    avatar.addEventListener("mouseleave", onLeave);
   }
 }
