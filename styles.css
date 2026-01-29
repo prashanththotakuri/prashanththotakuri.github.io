@@ -395,11 +395,24 @@ h1{
 .footer{padding:46px 0 34px}
 
 /* Reveal animations */
+/* Reveal Animations (safe fallback) */
+/* Default: visible (so nothing disappears if JS fails) */
 .reveal{
-  opacity:0;
+  opacity: 1;
+  transform: none;
+}
+
+/* Only hide when JS is running */
+.js .reveal{
+  opacity: 0;
   transform: translateY(14px);
   transition: opacity .6s ease, transform .6s ease;
 }
+.js .reveal.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .reveal.show{opacity:1; transform: translateY(0)}
 
 /* Responsive */
