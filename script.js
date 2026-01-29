@@ -5,14 +5,12 @@ document.documentElement.classList.add("js");
 const yearEl = document.getElementById("year");
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-// Mobile menu
+// Mobile menu (safe even if elements don't exist)
 const btn = document.getElementById("menuBtn");
 const mobileNav = document.getElementById("mobileNav");
-
 if (btn && mobileNav) {
   btn.addEventListener("click", () => {
-    mobileNav.classList.toggle("open");
-    const isOpen = mobileNav.classList.contains("open");
+    const isOpen = mobileNav.classList.toggle("open");
     btn.setAttribute("aria-expanded", String(isOpen));
   });
 
@@ -24,10 +22,9 @@ if (btn && mobileNav) {
   });
 }
 
-// Reduced motion
+// Reveal on scroll
 const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-/* ===================== Reveal on scroll ===================== */
 if (!prefersReduced) {
   const els = document.querySelectorAll(".reveal");
   const io = new IntersectionObserver(
@@ -43,10 +40,9 @@ if (!prefersReduced) {
   document.querySelectorAll(".reveal").forEach((el) => el.classList.add("show"));
 }
 
-/* ===================== Premium thumbnail parallax ===================== */
+// Premium thumbnail parallax (mouse move)
 if (!prefersReduced) {
   const wraps = document.querySelectorAll("[data-parallax]");
-
   wraps.forEach((wrap) => {
     const img = wrap.querySelector("img");
     if (!img) return;
@@ -76,7 +72,7 @@ if (!prefersReduced) {
     };
 
     const onLeave = () => {
-      img.style.transform = "translate3d(0,0,0) scale(1.03)";
+      img.style.transform = "translate3d(0,0,0) scale(1.02)";
       img.style.willChange = "auto";
       rect = null;
     };
@@ -87,30 +83,85 @@ if (!prefersReduced) {
   });
 }
 
-/* ===================== Cursor FX (glow + pulse + hover boost) ===================== */
-const fx = document.querySelector(".cursorfx");
-if (fx && !prefersReduced) {
-  const root = document.documentElement;
+/* =========================
+   Cursor FX (next level)
+   ========================= */
+if (!prefersReduced) {
+  const fx = document.querySelector(".cursorfx");
+  if (fx) {
+    // Smooth follow
+    let targetX = window.innerWidth / 2;
+    let targetY = window.innerHeight / 2;
+    let currentX = targetX;
+    let currentY = targetY;
 
-  const setPos = (x, y) => {
-    root.style.setProperty("--x", `${x}px`);
-    root.style.setProperty("--y", `${y}px`);
-  };
+    const setVars = (x, y) => {
+      fx.style.setProperty("--x", `${x}px`);
+      fx.style.setProperty("--y", `${y}px`);
+    };
 
-  window.addEventListener("mousemove", (e) => setPos(e.clientX, e.clientY), { passive: true });
+    window.addEventListener(
+      "mousemove",
+      (e) => {
+        targetX = e.clientX;
+        targetY = e.clientY;
+      },
+      { passive: true }
+    );
 
-  // Click pulse
-  window.addEventListener("mousedown", () => {
-    const pulse = document.createElement("div");
-    pulse.className = "cursorfx-pulse";
-    document.body.appendChild(pulse);
-    setTimeout(() => pulse.remove(), 650);
-  });
+    const tick = () => {
+      // easing
+      currentX += (targetX - currentX) * 0.18;
+      currentY += (targetY - currentY) * 0.18;
+      setVars(currentX, currentY);
+      requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
 
-  // Hover boost on interactive elements
-  const hoverTargets = "a, button, .card, .thumb-wrap, .btn";
-  document.querySelectorAll(hoverTargets).forEach((el) => {
-    el.addEventListener("mouseenter", () => fx.classList.add("is-boost"));
-    el.addEventListener("mouseleave", () => fx.classList.remove("is-boost"));
-  });
+    // Click pulse burst
+    window.addEventListener(
+      "pointerdown",
+      () => {
+        const p = document.createElement("div");
+        p.className = "cursorfx-pulse";
+        document.body.appendChild(p);
+        // Remove after animation
+        setTimeout(() => p.remove(), 650);
+      },
+      { passive: true }
+    );
+
+    // Boost glow on interactive hover
+    const boostSelectors = [
+      "a",
+      "button",
+      ".btn",
+      ".card",
+      ".thumb-wrap",
+      ".project-thumb",
+      ".mini-card",
+      ".link",
+    ].join(",");
+
+    document.addEventListener(
+      "mouseover",
+      (e) => {
+        const el = e.target.closest?.(boostSelectors);
+        if (el) fx.classList.add("is-boost");
+      },
+      { passive: true }
+    );
+
+    document.addEventListener(
+      "mouseout",
+      (e) => {
+        // If leaving interactive area, remove boost
+        const related = e.relatedTarget;
+        if (!related || !related.closest?.(boostSelectors)) {
+          fx.classList.remove("is-boost");
+        }
+      },
+      { passive: true }
+    );
+  }
 }
