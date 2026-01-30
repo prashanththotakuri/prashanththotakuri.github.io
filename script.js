@@ -209,33 +209,91 @@ if (!prefersReduced) {
     wrap.addEventListener("mouseleave", onLeave);
   }
 }
-// ================= TESTIMONIAL SLIDER =================
+// ================= FUTURISTIC TESTIMONIAL SLIDER =================
+(() => {
+  const slider = document.querySelector(".testimonial-slider");
+  const track = document.querySelector(".testimonial-track");
+  const cards = document.querySelectorAll(".testimonial-card");
+  const dotsContainer = document.querySelector(".slider-dots");
 
-const track = document.querySelector(".testimonial-track");
-const cards = document.querySelectorAll(".testimonial-card");
-const dotsContainer = document.querySelector(".slider-dots");
+  if (!slider || !track || !cards.length || !dotsContainer) return;
 
-let index = 0;
+  let index = 0;
+  let timer = null;
 
-function updateSlider() {
-  track.style.transform = `translateX(-${index * 100}%)`;
-  document.querySelectorAll(".slider-dots button").forEach(dot => dot.classList.remove("active"));
-  dotsContainer.children[index].classList.add("active");
-}
+  const setIndex = (i) => {
+    index = (i + cards.length) % cards.length;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    [...dotsContainer.children].forEach((d) => d.classList.remove("active"));
+    dotsContainer.children[index]?.classList.add("active");
+  };
 
-// Create dots
-cards.forEach((_, i) => {
-  const dot = document.createElement("button");
-  if (i === 0) dot.classList.add("active");
-  dot.addEventListener("click", () => {
-    index = i;
-    updateSlider();
+  // build dots
+  dotsContainer.innerHTML = "";
+  cards.forEach((_, i) => {
+    const btn = document.createElement("button");
+    if (i === 0) btn.classList.add("active");
+    btn.addEventListener("click", () => {
+      stop();
+      setIndex(i);
+      start();
+    });
+    dotsContainer.appendChild(btn);
   });
-  dotsContainer.appendChild(dot);
-});
 
-// Auto slide
-setInterval(() => {
-  index = (index + 1) % cards.length;
-  updateSlider();
-}, 6000);
+  const start = () => {
+    stop();
+    timer = setInterval(() => setIndex(index + 1), 5500);
+  };
+
+  const stop = () => {
+    if (timer) clearInterval(timer);
+    timer = null;
+  };
+
+  // pause on hover (desktop)
+  slider.addEventListener("mouseenter", stop);
+  slider.addEventListener("mouseleave", start);
+
+  // swipe support (mobile)
+  let startX = 0;
+  let dx = 0;
+  let isDown = false;
+
+  const onDown = (e) => {
+    isDown = true;
+    startX = e.touches ? e.touches[0].clientX : e.clientX;
+    dx = 0;
+    stop();
+  };
+
+  const onMove = (e) => {
+    if (!isDown) return;
+    const x = e.touches ? e.touches[0].clientX : e.clientX;
+    dx = x - startX;
+  };
+
+  const onUp = () => {
+    if (!isDown) return;
+    isDown = false;
+
+    if (Math.abs(dx) > 45) {
+      setIndex(dx < 0 ? index + 1 : index - 1);
+    }
+    start();
+  };
+
+  slider.addEventListener("touchstart", onDown, { passive: true });
+  slider.addEventListener("touchmove", onMove, { passive: true });
+  slider.addEventListener("touchend", onUp);
+
+  slider.addEventListener("pointerdown", onDown);
+  slider.addEventListener("pointermove", onMove);
+  slider.addEventListener("pointerup", onUp);
+  slider.addEventListener("pointercancel", onUp);
+  slider.addEventListener("pointerleave", onUp);
+
+  // init
+  setIndex(0);
+  start();
+})();
