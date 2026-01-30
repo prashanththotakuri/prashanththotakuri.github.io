@@ -209,3 +209,33 @@ if (!prefersReduced) {
     wrap.addEventListener("mouseleave", onLeave);
   }
 }
+// ================= TESTIMONIAL SLIDER =================
+
+const track = document.querySelector(".testimonial-track");
+const cards = document.querySelectorAll(".testimonial-card");
+const dotsContainer = document.querySelector(".slider-dots");
+
+let index = 0;
+
+function updateSlider() {
+  track.style.transform = `translateX(-${index * 100}%)`;
+  document.querySelectorAll(".slider-dots button").forEach(dot => dot.classList.remove("active"));
+  dotsContainer.children[index].classList.add("active");
+}
+
+// Create dots
+cards.forEach((_, i) => {
+  const dot = document.createElement("button");
+  if (i === 0) dot.classList.add("active");
+  dot.addEventListener("click", () => {
+    index = i;
+    updateSlider();
+  });
+  dotsContainer.appendChild(dot);
+});
+
+// Auto slide
+setInterval(() => {
+  index = (index + 1) % cards.length;
+  updateSlider();
+}, 6000);
