@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QA Automation Skill Assessment | Prashanth Thotakuri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .progress-bar {
+            margin-top: 20px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: white;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .question-container {
+            margin-bottom: 40px;
+        }
+
+        .question-number {
+            color: #667eea;
+            font-weight: 600;
+            font-size: 0.9em;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .question {
+            font-size: 1.3em;
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .option {
+            margin: 12px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            border: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+
+        .option:hover {
+            background: #e9ecef;
+            border-color: #667eea;
+            transform: translateX(5px);
+        }
+
+        .option input[type="radio"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+            color: #555;
+            font-size: 1.05em;
+        }
+
+        .option input[type="radio"]:checked + label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .button-group {
+            margin-top: 40px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-secondary {
+            background: #e9ecef;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+
+        .btn-secondary:hover {
+            background: #667eea;
+            color: white;
+        }
+
+        .results {
+            margin-top: 50px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .score-display {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .score-circle {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3em;
+            font-weight: 700;
+            margin: 0 auto 20px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .score-circle.beginner { background: linear-gradient(135deg, #ff6b6b 0%, #ff5252 100%); }
+        .score-circle.intermediate { background: linear-gradient(135deg, #ffc107 0%, #ffb300 100%); }
+        .score-circle.advanced { background: linear-gradient(135deg, #28a745 0%, #20c997 100%); }
+        .score-circle.expert { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); }
+
+        .level-title {
+            font-size: 2em;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .level-description {
+            font-size: 1.1em;
+            color: #666;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .recommendation-box {
+            background: #f0f8ff;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .recommendation-box h3 {
+            color: #667eea;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .recommendation-box ul {
+            margin-left: 20px;
+            color: #555;
+            line-height: 2;
+        }
+
+        .recommendation-box a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .recommendation-box a:hover {
+            text-decoration: underline;
+        }
+
+        .learning-path {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+
+        .learning-path h3 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+            font-size: 1.2em;
+        }
+
+        .learning-path ol {
+            margin-left: 20px;
+            color: #555;
+            line-height: 2;
+        }
+
+        .learning-path a {
+            color: #17a2b8;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .learning-path a:hover {
+            text-decoration: underline;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .cta-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .cta-box a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-box a:hover {
+            background: white;
+            color: #28a745;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 5px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .score-circle {
+                width: 120px;
+                height: 120px;
+                font-size: 2.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1><span class="emoji">🎓</span>QA Automation Skill Assessment</h1>
+        <p>10 questions to evaluate your QA automation expertise</p>
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <div class="content">
+        <div id="quizContainer">
+            <!-- Question 1 -->
+            <div class="question-container">
+                <div class="question-number">Question 1 of 10</div>
+                <div class="question">What is the main purpose of Page Object Model (POM)?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q1a" name="q1" value="0">
+                        <label for="q1a">To make test execution faster</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1b" name="q1" value="2">
+                        <label for="q1b">To separate UI locators from test logic, improving maintainability</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q1c" name="q1" value="1">
+                        <label for="q1c">To reduce the number of test cases needed</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 2 -->
+            <div class="question-container">
+                <div class="question-number">Question 2 of 10</div>
+                <div class="question">Which wait strategy is most reliable for modern web applications?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q2a" name="q2" value="0">
+                        <label for="q2a">Implicit waits (driver.manage().timeouts().implicitlyWait())</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2b" name="q2" value="2">
+                        <label for="q2b">Explicit waits (WebDriverWait with ExpectedConditions)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q2c" name="q2" value="1">
+                        <label for="q2c">Hard waits (Thread.sleep())</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 3 -->
+            <div class="question-container">
+                <div class="question-number">Question 3 of 10</div>
+                <div class="question">What's the main advantage of Playwright over Selenium?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q3a" name="q3" value="1">
+                        <label for="q3a">More browser support</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3b" name="q3" value="2">
+                        <label for="q3b">Auto-waiting, faster execution (70% faster), more stable, better DX</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q3c" name="q3" value="0">
+                        <label for="q3c">Cheaper licensing</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 4 -->
+            <div class="question-container">
+                <div class="question-number">Question 4 of 10</div>
+                <div class="question">How should you handle flaky/unstable tests?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q4a" name="q4" value="0">
+                        <label for="q4a">Ignore them (they'll pass eventually)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4b" name="q4" value="2">
+                        <label for="q4b">Debug root cause and fix with proper waits, error handling, retries</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q4c" name="q4" value="1">
+                        <label for="q4c">Increase timeout to 120 seconds</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 5 -->
+            <div class="question-container">
+                <div class="question-number">Question 5 of 10</div>
+                <div class="question">What's the best approach for test data management?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q5a" name="q5" value="0">
+                        <label for="q5a">Hardcode test data directly in test files</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5b" name="q5" value="2">
+                        <label for="q5b">Use data-driven approach with config files, fixtures, or databases</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q5c" name="q5" value="1">
+                        <label for="q5c">Use shared credentials via email/shared drive</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 6 -->
+            <div class="question-container">
+                <div class="question-number">Question 6 of 10</div>
+                <div class="question">What framework is best for API automation?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q6a" name="q6" value="1">
+                        <label for="q6a">Selenium WebDriver</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6b" name="q6" value="2">
+                        <label for="q6b">RestAssured or Postman (specialized API testing)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q6c" name="q6" value="0">
+                        <label for="q6c">Manual testing with Postman</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 7 -->
+            <div class="question-container">
+                <div class="question-number">Question 7 of 10</div>
+                <div class="question">What's the best framework for mobile app testing?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q7a" name="q7" value="0">
+                        <label for="q7a">Selenium (works for everything)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7b" name="q7" value="2">
+                        <label for="q7b">Appium (specialized for Android & iOS native apps)</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q7c" name="q7" value="1">
+                        <label for="q7c">Manual testing only</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 8 -->
+            <div class="question-container">
+                <div class="question-number">Question 8 of 10</div>
+                <div class="question">What should you do to prevent StaleElementReferenceException?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q8a" name="q8" value="1">
+                        <label for="q8a">Cache all elements at the beginning of test</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8b" name="q8" value="2">
+                        <label for="q8b">Re-find elements instead of caching, use locators with every action</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q8c" name="q8" value="0">
+                        <label for="q8c">Use implicit waits only</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 9 -->
+            <div class="question-container">
+                <div class="question-number">Question 9 of 10</div>
+                <div class="question">What's a key benefit of CI/CD integration with test automation?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q9a" name="q9" value="1">
+                        <label for="q9a">Looks good on resumes</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9b" name="q9" value="2">
+                        <label for="q9b">Automated, faster feedback on code quality, early bug detection</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q9c" name="q9" value="0">
+                        <label for="q9c">Reduces the need for manual testing entirely</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question 10 -->
+            <div class="question-container">
+                <div class="question-number">Question 10 of 10</div>
+                <div class="question">How important is code readability in automation frameworks?</div>
+                <div>
+                    <div class="option">
+                        <input type="radio" id="q10a" name="q10" value="0">
+                        <label for="q10a">Not important, as long as it works</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10b" name="q10" value="2">
+                        <label for="q10b">Critical! Other engineers must understand and maintain the code</label>
+                    </div>
+                    <div class="option">
+                        <input type="radio" id="q10c" name="q10" value="1">
+                        <label for="q10c">Nice to have but not essential</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="resetQuiz()"><span class="emoji">🔄</span>Reset</button>
+                <button class="btn btn-primary" onclick="submitQuiz()"><span class="emoji">📊</span>Calculate My Score</button>
+            </div>
+        </div>
+
+        <div id="resultsContainer" class="results">
+            <div class="score-display">
+                <div class="score-circle" id="scoreCircle">0/10</div>
+                <h2 class="level-title" id="levelTitle">Beginner</h2>
+                <p class="level-description" id="levelDescription"></p>
+            </div>
+
+            <div class="recommendation-box">
+                <h3><span class="emoji">💡</span>Your Strengths & Growth Areas</h3>
+                <p id="strengths"></p>
+            </div>
+
+            <div class="learning-path">
+                <h3><span class="emoji">📚</span>Personalized Learning Path</h3>
+                <ol id="learningPath"></ol>
+            </div>
+
+            <div class="cta-box">
+                <h3><span class="emoji">🚀</span>Ready to Level Up?</h3>
+                <p style="margin-bottom: 15px;">Start with my production-ready frameworks and comprehensive guides</p>
+                <a href="https://github.com/prashanththotakuri" target="_blank">→ View My GitHub</a>
+                <a href="https://prashanththotakuri.github.io/" target="_blank">→ Visit Portfolio</a>
+            </div>
+
+            <div class="button-group">
+                <button class="btn btn-secondary" onclick="resetQuiz()"><span class="emoji">🔄</span>Retake Quiz</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by <a href="https://github.com/prashanththotakuri" target="_blank">Prashanth Thotakuri</a> | 
+        <a href="https://prashanththotakuri.github.io/" target="_blank">Visit My Portfolio</a>
+    </div>
+</div>
+
+<script>
+function submitQuiz() {
+    let score = 0;
+    for (let i = 1; i <= 10; i++) {
+        const selected = document.querySelector(`input[name="q${i}"]:checked`);
+        if (selected) {
+            score += parseInt(selected.value);
+        }
+    }
+
+    const maxScore = 20;
+    const finalScore = Math.round((score / maxScore) * 10);
+
+    let level = '';
+    let description = '';
+    let strengths = '';
+    let learningPath = [];
+    let circleClass = 'beginner';
+
+    if (finalScore >= 9) {
+        level = '🌟 EXPERT (9-10/10)';
+        description = 'Outstanding! You have deep expertise in QA automation and are ready for advanced roles.';
+        strengths = 'You understand POM, explicit waits, data-driven testing, CI/CD, and best practices. You\'re ready to: architect frameworks, lead teams, consult on automation strategy, contribute to open source.';
+        learningPath = [
+            '<a href="https://github.com/prashanththotakuri/prashanththotakuri" target="_blank">Advanced Framework Patterns</a> - Explore cutting-edge automation techniques',
+            '<a href="https://github.com/prashanththotakuri" target="_blank">Open Source Contributions</a> - Give back to the automation community',
+            'Leadership: Mentor junior QA engineers and lead automation initiatives',
+            '<a href="https://github.com/prashanththotakuri" target="_blank">Build Your Own Framework</a> - Tailor solutions for specific needs'
+        ];
+        circleClass = 'expert';
+    } else if (finalScore >= 7) {
+        level = '💪 ADVANCED (7-8/10)';
+        description = 'Strong foundation! You can handle complex automation projects and are ready for senior roles.';
+        strengths = 'You understand most automation concepts. Focus on: advanced performance optimization, API testing expertise, mobile automation, CI/CD mastery.';
+        learningPath = [
+            '<a href="https://github.com/prashanththotakuri/api-automation-postman-restassured" target="_blank">API Automation Deep Dive</a> - Master API testing',
+            '<a href="https://github.com/prashanththotakuri/appium-mobile-automation" target="_blank">Mobile Automation</a> - Expand to mobile platforms',
+            '<a href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank">Playwright Mastery</a> - Learn modern fast frameworks',
+            'System Design: Design frameworks for enterprise-scale applications'
+        ];
+        circleClass = 'advanced';
+    } else if (finalScore >= 5) {
+        level = '👍 INTERMEDIATE (5-6/10)';
+        description = 'Good progress! You have solid fundamentals and can handle most automation tasks.';
+        strengths = 'You understand basic concepts. Areas to improve: POM pattern mastery, explicit waits, API testing, test data management.';
+        learningPath = [
+            '<a href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank">POM Best Practices</a> - Master Page Object Model',
+            '<a href="https://github.com/prashanththotakuri/plashanththotakuri/docs/BEST_PRACTICES.md" target="_blank">Best Practices Guide</a> - Learn industry standards',
+            '<a href="https://github.com/prashanththotakuri/api-automation-postman-restassured" target="_blank">API Automation</a> - Expand beyond UI testing',
+            '<a href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank">Modern Frameworks</a> - Try Playwright for faster tests'
+        ];
+        circleClass = 'intermediate';
+    } else {
+        level = '📚 BEGINNER (< 5/10)';
+        description = 'You\'re just starting! Focus on fundamentals and you\'ll progress quickly.';
+        strengths = 'You\'re building foundational knowledge. Important next steps: master POM pattern, understand waits properly, learn data-driven testing.';
+        learningPath = [
+            '<a href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank">Selenium Fundamentals</a> - Start with the basics',
+            '<a href="https://github.com/prashanththotakuri/prashanththotakuri/docs/BEST_PRACTICES.md" target="_blank">QA Best Practices</a> - Learn industry standards',
+            '<a href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank">Try Playwright</a> - Modern, easier to learn',
+            '<a href="https://github.com/prashanththotakuri" target="_blank">Download Templates</a> - Get starter code and examples'
+        ];
+        circleClass = 'beginner';
+    }
+
+    document.getElementById('scoreCircle').textContent = `${finalScore}/10`;
+    document.getElementById('scoreCircle').className = `score-circle ${circleClass}`;
+    document.getElementById('levelTitle').textContent = level;
+    document.getElementById('levelDescription').textContent = description;
+    document.getElementById('strengths').textContent = strengths;
+    
+    let pathHTML = '';
+    learningPath.forEach(item => {
+        pathHTML += `<li>${item}</li>`;
+    });
+    document.getElementById('learningPath').innerHTML = pathHTML;
+
+    document.getElementById('quizContainer').style.display = 'none';
+    document.getElementById('resultsContainer').classList.add('show');
+    document.getElementById('resultsContainer').scrollIntoView({ behavior: 'smooth' });
+
+    updateProgress(10);
+}
+
+function resetQuiz() {
+    const radios = document.querySelectorAll('input[type="radio"]');
+    radios.forEach(radio => radio.checked = false);
+    
+    document.getElementById('quizContainer').style.display = 'block';
+    document.getElementById('resultsContainer').classList.remove('show');
+    updateProgress(0);
+    
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateProgress(value) {
+    const progress = (value / 10) * 100;
+    document.getElementById('progressFill').style.width = progress + '%';
+}
+
+// Update progress as user answers questions
+document.querySelectorAll('input[type="radio"]').forEach(radio => {
+    radio.addEventListener('change', () => {
+        const answered = document.querySelectorAll('input[type="radio"]:checked').length;
+        updateProgress(answered);
+    });
+});
+</script>
+
+</body>
+</html>

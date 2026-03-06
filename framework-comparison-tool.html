@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Perfect QA Framework | Prashanth Thotakuri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .header p {
+            font-size: 1.1em;
+            opacity: 0.95;
+            font-weight: 300;
+        }
+
+        .content {
+            padding: 50px 40px;
+        }
+
+        .checkbox-group {
+            margin-bottom: 30px;
+        }
+
+        .checkbox-item {
+            margin: 15px 0;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .checkbox-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .checkbox-item input[type="checkbox"] {
+            margin-right: 12px;
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: #667eea;
+        }
+
+        .checkbox-item label {
+            cursor: pointer;
+            font-size: 1.05em;
+            color: #333;
+            display: flex;
+            align-items: center;
+        }
+
+        .checkbox-item input[type="checkbox"]:checked + label {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .button-group {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 50px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .results {
+            margin-top: 50px;
+            display: none;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .results h2 {
+            color: #667eea;
+            font-size: 2em;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .framework-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 25px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            border-left: 5px solid #667eea;
+            transition: all 0.3s ease;
+        }
+
+        .framework-card.primary {
+            border-left-color: #28a745;
+            background: linear-gradient(135deg, #d4edda 0%, #c3e6cb 100%);
+        }
+
+        .framework-card.secondary {
+            border-left-color: #ffc107;
+            background: linear-gradient(135deg, #fff3cd 0%, #ffe69c 100%);
+        }
+
+        .framework-card.tertiary {
+            border-left-color: #17a2b8;
+            background: linear-gradient(135deg, #d1ecf1 0%, #bee5eb 100%);
+        }
+
+        .framework-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .framework-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .framework-card p {
+            margin: 10px 0;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .framework-card strong {
+            color: #333;
+        }
+
+        .framework-card a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        .framework-card a:hover {
+            color: #764ba2;
+            text-decoration: underline;
+        }
+
+        .score-tag {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-right: 10px;
+            font-weight: 600;
+        }
+
+        .next-steps {
+            background: #e8f4f8;
+            border-left: 4px solid #17a2b8;
+            padding: 20px;
+            border-radius: 8px;
+            margin-top: 30px;
+        }
+
+        .next-steps h3 {
+            color: #17a2b8;
+            margin-bottom: 15px;
+        }
+
+        .next-steps ol {
+            margin-left: 20px;
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .next-steps a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .next-steps a:hover {
+            text-decoration: underline;
+        }
+
+        .cta-box {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .cta-box h3 {
+            font-size: 1.3em;
+            margin-bottom: 15px;
+        }
+
+        .cta-box a {
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            margin: 10px 5px;
+            padding: 10px 20px;
+            border: 2px solid white;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-box a:hover {
+            background: white;
+            color: #28a745;
+        }
+
+        .emoji {
+            font-size: 1.3em;
+            margin-right: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 40px 20px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .framework-card {
+                padding: 20px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+        }
+
+        .no-selection {
+            text-align: center;
+            color: #999;
+            font-size: 1.1em;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .loader {
+            text-align: center;
+            margin: 30px 0;
+            display: none;
+        }
+
+        .loader.show {
+            display: block;
+        }
+
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .info-box {
+            background: #f0f8ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 15px 0;
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.85em;
+            margin-right: 8px;
+            margin-top: 10px;
+        }
+
+        .footer {
+            background: #f8f9fa;
+            padding: 20px;
+            text-align: center;
+            color: #666;
+            font-size: 0.9em;
+            border-top: 1px solid #e9ecef;
+        }
+
+        .footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1><span class="emoji">🎯</span>Find Your Perfect Framework</h1>
+        <p>Select your needs and discover which automation framework is best for you</p>
+    </div>
+
+    <div class="content">
+        <div class="checkbox-group">
+            <div class="checkbox-item">
+                <input type="checkbox" id="fastSpeed">
+                <label for="fastSpeed"><span class="emoji">⚡</span>Need fast test execution? (3-5 min instead of 8-10 min)</label>
+            </div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="crossBrowser">
+                <label for="crossBrowser"><span class="emoji">🌐</span>Need cross-browser support? (Chrome, Firefox, Safari, Edge)</label>
+            </div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="mobileTest">
+                <label for="mobileTest"><span class="emoji">📱</span>Need mobile testing? (Android & iOS)</label>
+            </div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="apiTest">
+                <label for="apiTest"><span class="emoji">🔌</span>Need API testing? (REST, GraphQL, SOAP)</label>
+            </div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="easyLearn">
+                <label for="easyLearn"><span class="emoji">📚</span>Need easy learning curve? (Beginners welcomed)</label>
+            </div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="cloudReady">
+                <label for="cloudReady"><span class="emoji">☁️</span>Need cloud/CI-CD integration?</label>
+            </div>
+
+            <div class="checkbox-item">
+                <input type="checkbox" id="enterprise">
+                <label for="enterprise"><span class="emoji">🏢</span>Enterprise-grade maturity & support?</label>
+            </div>
+        </div>
+
+        <div class="button-group">
+            <button class="btn" onclick="findFramework()"><span class="emoji">🚀</span>Find My Perfect Framework</button>
+        </div>
+
+        <div class="loader" id="loader">
+            <div class="spinner"></div>
+            <p>Analyzing your requirements...</p>
+        </div>
+
+        <div class="no-selection" id="noSelection">
+            👆 Select at least one requirement to get started
+        </div>
+
+        <div class="results" id="results">
+            <h2>✨ Your Perfect Framework Stack</h2>
+            <div id="resultContent"></div>
+        </div>
+    </div>
+
+    <div class="footer">
+        Created by <a href="https://github.com/prashanththotakuri" target="_blank">Prashanth Thotakuri</a> | 
+        <a href="https://prashanththotakuri.github.io/" target="_blank">Visit My Portfolio</a>
+    </div>
+</div>
+
+<script>
+function findFramework() {
+    const selections = [
+        document.getElementById('fastSpeed').checked,
+        document.getElementById('crossBrowser').checked,
+        document.getElementById('mobileTest').checked,
+        document.getElementById('apiTest').checked,
+        document.getElementById('easyLearn').checked,
+        document.getElementById('cloudReady').checked,
+        document.getElementById('enterprise').checked
+    ];
+
+    if (!selections.some(s => s)) {
+        document.getElementById('noSelection').style.display = 'block';
+        document.getElementById('results').classList.remove('show');
+        return;
+    }
+
+    document.getElementById('noSelection').style.display = 'none';
+    document.getElementById('loader').classList.add('show');
+    document.getElementById('results').classList.remove('show');
+
+    // Simulate loading
+    setTimeout(() => {
+        document.getElementById('loader').classList.remove('show');
+        generateRecommendation();
+        document.getElementById('results').classList.add('show');
+        document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+    }, 1500);
+}
+
+function generateRecommendation() {
+    const fastSpeed = document.getElementById('fastSpeed').checked;
+    const crossBrowser = document.getElementById('crossBrowser').checked;
+    const mobileTest = document.getElementById('mobileTest').checked;
+    const apiTest = document.getElementById('apiTest').checked;
+    const easyLearn = document.getElementById('easyLearn').checked;
+    const cloudReady = document.getElementById('cloudReady').checked;
+    const enterprise = document.getElementById('enterprise').checked;
+
+    let html = '';
+
+    // Mobile Testing
+    if (mobileTest) {
+        html += `
+            <div class="framework-card primary">
+                <h3><span class="emoji">📱</span>PRIMARY: Appium Mobile Framework</h3>
+                <p><strong>Best for:</strong> Native mobile app testing (Android & iOS)</p>
+                <p><strong>Why this is perfect for you:</strong> Only solution for native mobile automation. Works with real devices and emulators.</p>
+                
+                <div class="info-box">
+                    <strong>Key Features:</strong>
+                    <div class="badge">Android Automation</div>
+                    <div class="badge">iOS Automation</div>
+                    <div class="badge">Native Apps</div>
+                    <div class="badge">Real Devices</div>
+                    <div class="badge">Emulators</div>
+                </div>
+
+                <p><strong>⏱️ Setup time:</strong> 5-7 days</p>
+                <p><strong>💰 Cost:</strong> FREE (Open-source)</p>
+                <p><strong>👥 Learning curve:</strong> Moderate</p>
+                <p><strong>📊 Community:</strong> Large & active</p>
+                
+                <p style="margin-top: 15px;">
+                    <strong>🔗 Check out my implementation:</strong><br>
+                    <a href="https://github.com/prashanththotakuri/appium-mobile-automation" target="_blank">→ View Appium Framework</a><br>
+                    <a href="https://github.com/prashanththotakuri/appium-mobile-automation" target="_blank">→ Download Starter Template</a>
+                </p>
+            </div>
+        `;
+    }
+
+    // API Testing
+    if (apiTest) {
+        html += `
+            <div class="framework-card secondary">
+                <h3><span class="emoji">🔌</span>SECONDARY: API Automation (RestAssured/Postman)</h3>
+                <p><strong>Best for:</strong> Complete REST/GraphQL API testing and validation</p>
+                <p><strong>Why this is perfect for you:</strong> Most powerful for API validation, assertions, and contract testing.</p>
+                
+                <div class="info-box">
+                    <strong>Key Features:</strong>
+                    <div class="badge">REST APIs</div>
+                    <div class="badge">GraphQL</div>
+                    <div class="badge">Authentication</div>
+                    <div class="badge">Assertions</div>
+                    <div class="badge">Schema Validation</div>
+                </div>
+
+                <p><strong>⏱️ Setup time:</strong> 3-5 days</p>
+                <p><strong>💰 Cost:</strong> FREE (RestAssured) / Freemium (Postman)</p>
+                <p><strong>👥 Learning curve:</strong> Easy to Moderate</p>
+                <p><strong>📊 Performance:</strong> Sub-second responses</p>
+                
+                <p style="margin-top: 15px;">
+                    <strong>🔗 Check out my implementation:</strong><br>
+                    <a href="https://github.com/prashanththotakuri/api-automation-postman-restassured" target="_blank">→ View API Framework</a><br>
+                    <a href="https://github.com/prashanththotakuri/api-automation-postman-restassured" target="_blank">→ Download Starter Template</a>
+                </p>
+            </div>
+        `;
+    }
+
+    // Playwright Recommendation
+    if (fastSpeed || crossBrowser || easyLearn) {
+        html += `
+            <div class="framework-card tertiary">
+                <h3><span class="emoji">⚡</span>TERTIARY: Playwright UI Framework</h3>
+                <p><strong>Best for:</strong> Modern, fast web application UI testing</p>
+                <p><strong>Why this is perfect for you:</strong> Fastest execution, auto-waiting, most stable, easiest to learn. 70% faster than Selenium!</p>
+                
+                <div class="info-box">
+                    <strong>Key Features:</strong>
+                    <div class="badge">Auto-Waiting</div>
+                    <div class="badge">Cross-Browser</div>
+                    <div class="badge">Mobile Emulation</div>
+                    <div class="badge">Fast Execution</div>
+                    <div class="badge">Great DX</div>
+                </div>
+
+                <p><strong>⏱️ Setup time:</strong> 1-2 weeks</p>
+                <p><strong>💰 Cost:</strong> FREE (Open-source)</p>
+                <p><strong>⚡ Execution speed:</strong> 70% faster than Selenium</p>
+                <p><strong>📊 Reliability:</strong> Sub-1% flakiness rate</p>
+                <p><strong>👥 Learning curve:</strong> Very Easy (great for beginners!)</p>
+                
+                <p style="margin-top: 15px;">
+                    <strong>🔗 Check out my implementation:</strong><br>
+                    <a href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank">→ View Playwright Framework</a><br>
+                    <a href="https://github.com/prashanththotakuri/playwright-ui-automation" target="_blank">→ Download Starter Template</a>
+                </p>
+            </div>
+        `;
+    } else if (enterprise) {
+        // Selenium for Enterprise
+        html += `
+            <div class="framework-card secondary">
+                <h3><span class="emoji">🏢</span>RECOMMENDED: Selenium WebDriver</h3>
+                <p><strong>Best for:</strong> Enterprise web application testing with maximum maturity</p>
+                <p><strong>Why this is perfect for you:</strong> Most mature framework, largest community, maximum enterprise support, proven in Fortune 500 companies.</p>
+                
+                <div class="info-box">
+                    <strong>Key Features:</strong>
+                    <div class="badge">Mature Framework</div>
+                    <div class="badge">Huge Community</div>
+                    <div class="badge">Enterprise Support</div>
+                    <div class="badge">Maximum Compatibility</div>
+                    <div class="badge">Page Object Model</div>
+                </div>
+
+                <p><strong>⏱️ Setup time:</strong> 2-3 weeks</p>
+                <p><strong>💰 Cost:</strong> FREE (Open-source)</p>
+                <p><strong>👥 Learning curve:</strong> Moderate</p>
+                <p><strong>📊 Community:</strong> Largest in the industry</p>
+                
+                <p style="margin-top: 15px;">
+                    <strong>🔗 Check out my implementation:</strong><br>
+                    <a href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank">→ View Selenium Framework</a><br>
+                    <a href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank">→ Download Starter Template</a>
+                </p>
+            </div>
+        `;
+    } else {
+        // Default: Selenium
+        html += `
+            <div class="framework-card secondary">
+                <h3><span class="emoji">🌟</span>RECOMMENDED: Selenium WebDriver</h3>
+                <p><strong>Best for:</strong> Reliable, proven web application testing</p>
+                <p><strong>Why this is perfect for you:</strong> Most mature, largest community, proven in thousands of companies worldwide.</p>
+                
+                <div class="info-box">
+                    <strong>Key Features:</strong>
+                    <div class="badge">Industry Standard</div>
+                    <div class="badge">Large Community</div>
+                    <div class="badge">Proven Track Record</div>
+                    <div class="badge">Page Object Model</div>
+                    <div class="badge">Cross-Browser</div>
+                </div>
+
+                <p><strong>⏱️ Setup time:</strong> 2-3 weeks</p>
+                <p><strong>💰 Cost:</strong> FREE (Open-source)</p>
+                <p><strong>👥 Learning curve:</strong> Moderate</p>
+                <p><strong>📊 Community:</strong> Largest in automation</p>
+                
+                <p style="margin-top: 15px;">
+                    <strong>🔗 Check out my implementation:</strong><br>
+                    <a href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank">→ View Selenium Framework</a><br>
+                    <a href="https://github.com/prashanththotakuri/selenium-java-automation-framework" target="_blank">→ Download Starter Template</a>
+                </p>
+            </div>
+        `;
+    }
+
+    // Next Steps
+    html += `
+        <div class="next-steps">
+            <h3><span class="emoji">📋</span>YOUR NEXT STEPS</h3>
+            <ol>
+                <li>Check out my framework implementations (repos above)</li>
+                <li>Read the detailed documentation in the repos</li>
+                <li>Download the starter templates (ready to use!)</li>
+                <li>Review my best practices guide: <a href="https://github.com/prashanththotakuri/prashanththotakuri" target="_blank">QA Automation Guide</a></li>
+                <li>Ask questions in <a href="https://github.com/prashanththotakuri/selenium-java-automation-framework/discussions" target="_blank">GitHub Discussions</a></li>
+            </ol>
+        </div>
+
+        <div class="cta-box">
+            <h3><span class="emoji">🚀</span>READY TO BUILD?</h3>
+            <p style="margin-bottom: 15px;">Start with my production-ready templates and best practices</p>
+            <a href="https://github.com/prashanththotakuri" target="_blank">→ Visit My GitHub</a>
+            <a href="https://prashanththotakuri.github.io/" target="_blank">→ View Portfolio</a>
+            <a href="https://linkedin.com/in/prashanth-prashanth-57b691130" target="_blank">→ Connect on LinkedIn</a>
+        </div>
+    `;
+
+    document.getElementById('resultContent').innerHTML = html;
+}
+</script>
+
+</body>
+</html>
